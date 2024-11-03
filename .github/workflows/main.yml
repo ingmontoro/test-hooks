@@ -11,4 +11,4 @@ jobs:
     - uses: actions/checkout@v3
     
     - name: "Deployed site"
-      run: curl -X POST -d {} ${{ secrets.FLYPO_TEST_HOOK }}
+      run: curl ${{ secrets.FLYPO_TEST_HOOK }}
