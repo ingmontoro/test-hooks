@@ -1,0 +1,17 @@
+name: Deploy netlify site
+
+on: 
+  push: 
+    branches: [main]
+jobs: 
+  build: 
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: "Deployed site"
+      run: curl
+        -X POST
+        -H "Content-Type:application/json"
+        -d '{"${{ secrets.PARAM1 }}":"${{ secrets.VALUE1 }}", "${{ secrets.PARAM2 }}":"${{ secrets.VALUE2 }}"}' ${{ secrets.FLYPO_TEST_HOOK }}
