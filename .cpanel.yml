@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - current_path=`pwd`
+    - /bin/cp .cpanel.yml .cpanel.yml.new
