@@ -1,4 +1,4 @@
-name: Deploy netlify site
+name: Deploy on server
 
 on:
   push:
@@ -10,18 +10,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-     - name: Get branch name
-        id: get-branch-name
-        run: |
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            echo "BRANCH_NAME=${{ github.head_ref }}" >> $GITHUB_OUTPUT
-          else
-            echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
-          fi
-        shell: bash
+    - name: "Get branch name"
+      run: echo "BRANCH_NAME=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
 
     - name: "Deployed site"
       run: curl
         -X POST
         -H "Content-Type:application/json"
-        -d '{"branch":"${{ steps.get-branch-name.outputs.BRANCH_NAME }}", "${{ secrets.PARAM1 }}":"${{ secrets.VALUE1 }}", "${{ secrets.PARAM2 }}":"${{ secrets.VALUE2 }}"}' ${{ secrets.FLYPO_TEST_HOOK }}
+        -d '{"branch":"${{ github.head_ref }}", "${{ secrets.PARAM1 }}":"${{ secrets.VALUE1 }}", "${{ secrets.PARAM2 }}":"${{ secrets.VALUE2 }}"}' ${{ secrets.FLYPO_TEST_HOOK }}
