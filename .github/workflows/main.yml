@@ -2,7 +2,7 @@ name: Deploy netlify site
 
 on:
   push:
-    branches: [main]
+    branches: [main,test]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,4 +14,4 @@ jobs:
       run: curl
         -X POST
         -H "Content-Type:application/json"
-        -d '{"${{ secrets.PARAM1 }}":"${{ secrets.VALUE1 }}", "${{ secrets.PARAM2 }}":"${{ secrets.VALUE2 }}"}' ${{ secrets.FLYPO_TEST_HOOK }}
+        -d '{"branch":"${GITHUB_REF##*/}", "${{ secrets.PARAM1 }}":"${{ secrets.VALUE1 }}", "${{ secrets.PARAM2 }}":"${{ secrets.VALUE2 }}"}' ${{ secrets.FLYPO_TEST_HOOK }}
